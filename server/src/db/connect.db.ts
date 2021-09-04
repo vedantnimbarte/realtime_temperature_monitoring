@@ -2,7 +2,7 @@ import "reflect-metadata";
 import * as config from "config";
 import { createConnection } from "typeorm";
 import log from "../logger";
-import { Temperature } from "../entity/temperature";
+import { Temperature } from "../entity/temperature.entity";
 
 export default function connect() {
   const db_host = config.get("dbHost") as string;
