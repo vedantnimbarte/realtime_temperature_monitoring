@@ -14,6 +14,11 @@ export class Temperature {
   @Column({
     nullable: false,
   })
+  material_type: string;
+
+  @Column({
+    nullable: false,
+  })
   temp1: string;
 
   @Column({
@@ -30,4 +35,24 @@ export class Temperature {
     nullable: false,
   })
   time: string;
+
+  @Column({
+    nullable: false,
+  })
+  min_temp: string;
+
+  @Column({
+    nullable: false,
+  })
+  max_temp: string;
+
+  @Column({
+    default: 0,
+  })
+  min_temp_status: string;
+
+  @Column({
+    default: 0,
+  })
+  max_temp_status: string;
 }
