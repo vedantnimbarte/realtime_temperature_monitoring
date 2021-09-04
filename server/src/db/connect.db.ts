@@ -1,20 +1,35 @@
 import "reflect-metadata";
-import * as express from "express";
 import * as config from "config";
-import log from "./logger";
-import connect from "./db/connect.db";
-import routes from "./routes";
+import { createConnection } from "typeorm";
+import { Users } from "../entity/users.entity";
+import log from "../logger";
+import { Temperature } from "../entity/temperature";
 
-const port = config.get("port") as number;
-const host = config.get("host") as string;
+export default function connect() {
+  const db_host = config.get("dbHost") as string;
+  const db_user = config.get("dbUser") as string;
+  const db_password = config.get("dbPassword") as string;
+  const db_port = config.get("dbPort") as number;
+  const db_name = config.get("dbName") as string;
 
-const app: express.Express = express();
+  log.info("Connecting to database...");
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.listen(port, host, () => {
-  log.info(`Server listening at http://${host}:${port}`);
-  connect();
-  routes(app);
-});
+  return createConnection({
+    type: "mysql",
+    host: db_host,
+    port: db_port,
+    username: db_user,
+    password: db_password,
+    database: db_name,
+    entities: [Temperature],
+    synchronize: true,
+    logging: false,
+  })
+    .then(() => {
+      log.info(`Connected to database...`);
+    })
+    .catch((error) => {
+      log.error(`[DATABASE ERROR]: ${error}`);
+      process.exit(1);
+    });
+}
