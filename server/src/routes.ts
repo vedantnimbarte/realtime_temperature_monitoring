@@ -1,5 +1,8 @@
 import { Express, Request, Response } from "express";
-import { temperatureInsertHandler } from "./controller/temperature.controller";
+import {
+  temperatureInsertHandler,
+  temperatureGetHandler,
+} from "./controller/temperature.controller";
 
 export default function (app: Express) {
   app.get("/api/healthcheck", (req: Request, res: Response) =>
@@ -7,4 +10,6 @@ export default function (app: Express) {
   );
 
   app.post("/api/temperature", temperatureInsertHandler);
+
+  app.get("/api/temperature", temperatureGetHandler);
 }
