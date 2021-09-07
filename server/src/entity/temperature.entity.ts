@@ -55,4 +55,9 @@ export class Temperature {
     default: 0,
   })
   max_temp_status: string;
+
+  @Column({
+    default: 0,
+  })
+  error_code: string;
 }
