@@ -3,8 +3,8 @@ if (process.env.NODE_ENV != "production") {
 }
 
 export default {
-  port: 3001,
-  host: "localhost",
+  port: process.env.PORT,
+  host: process.env.HOST,
   dbHost: process.env.DB_HOST,
   dbUser: process.env.DB_USER,
   dbPassword: process.env.DB_PASSWORD,
