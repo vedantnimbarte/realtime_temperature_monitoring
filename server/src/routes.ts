@@ -2,6 +2,9 @@ import { Express, Request, Response } from "express";
 import {
   temperatureInsertHandler,
   temperatureGetHandler,
+  temperatureMinGetHandler,
+  temperatureMaxGetHandler,
+  temperatureGetStatusHandler,
 } from "./controller/temperature.controller";
 
 export default function (app: Express) {
@@ -9,7 +12,13 @@ export default function (app: Express) {
     res.sendStatus(200)
   );
 
-  app.post("/api/temperature", temperatureInsertHandler);
+  app.post("/api/insertTemp", temperatureInsertHandler);
 
-  app.get("/api/temperature", temperatureGetHandler);
+  app.post("/api/getTemp", temperatureGetHandler);
+
+  app.post("/api/getTempStatus", temperatureGetStatusHandler);
+
+  app.post("/api/getMaxTemp", temperatureMaxGetHandler);
+
+  app.post("/api/getMinTemp", temperatureMinGetHandler);
 }
