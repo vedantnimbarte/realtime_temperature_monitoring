@@ -19,7 +19,7 @@ export async function temperatureInsertHandler(req: Request, res: Response) {
   } catch (err) {
     return res.status(502).json({
       success: "0",
-      errorMsg: "1",
+      errorMsg: err,
       temperatureData: null,
     });
   }
@@ -37,14 +37,18 @@ export async function temperatureGetHandler(req: Request, res: Response) {
         temperatureData: [...result],
       });
     } else {
-      return res.status(404).json({
+      return res.status(200).json({
         success: "0",
-        errorMsg: "1",
+        errorMsg: "No Data Available",
         temperatureData: null,
       });
     }
   } catch (err) {
-    return res.send(502).send(err);
+    return res.status(502).json({
+      success: "0",
+      errorMsg: err,
+      temperatureData: null,
+    });
   }
 }
 
@@ -60,14 +64,18 @@ export async function temperatureGetStatusHandler(req: Request, res: Response) {
         temperatureData: [...result],
       });
     } else {
-      return res.status(404).json({
+      return res.status(200).json({
         success: "0",
-        errorMsg: "1",
+        errorMsg: "No Data Available",
         temperatureData: null,
       });
     }
   } catch (err) {
-    return res.send(502).send(err);
+    return res.status(502).json({
+      success: "0",
+      errorMsg: err,
+      temperatureData: null,
+    });
   }
 }
 
@@ -83,14 +91,18 @@ export async function temperatureMinGetHandler(req: Request, res: Response) {
         temperatureData: [...result],
       });
     } else {
-      return res.status(404).json({
+      return res.status(200).json({
         success: "0",
-        errorMsg: "1",
+        errorMsg: "No Data Available",
         temperatureData: null,
       });
     }
   } catch (err) {
-    return res.send(502).send(err);
+    return res.status(502).json({
+      success: "0",
+      errorMsg: err,
+      temperatureData: null,
+    });
   }
 }
 
@@ -106,13 +118,17 @@ export async function temperatureMaxGetHandler(req: Request, res: Response) {
         temperatureData: [...result],
       });
     } else {
-      return res.status(404).json({
+      return res.status(200).json({
         success: "0",
-        errorMsg: "1",
+        errorMsg: "No Data Available",
         temperatureData: null,
       });
     }
   } catch (err) {
-    return res.send(502).send(err);
+    return res.status(502).json({
+      success: "0",
+      errorMsg: err,
+      temperatureData: null,
+    });
   }
 }
