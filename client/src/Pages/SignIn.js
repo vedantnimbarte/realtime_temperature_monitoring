@@ -14,7 +14,7 @@ import {
   Box,
   Typography,
 } from "@material-ui/core";
-import Copyright from "../components/Copyright";
+import Copyright from "../components/Copyright.component";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
