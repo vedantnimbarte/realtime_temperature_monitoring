@@ -18,6 +18,7 @@ export async function insert(input) {
       min_temp_status: input.min_temp_status,
       max_temp_status: input.max_temp_status,
       material_type: input.material_type,
+      error_code: input.error_code,
     })
     .execute();
   return result;
