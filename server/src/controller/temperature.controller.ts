@@ -12,15 +12,15 @@ export async function temperatureInsertHandler(req: Request, res: Response) {
   try {
     await insert(req.body);
     return res.status(200).json({
-      success: 1,
-      errorMsg: 0,
+      success: "1",
+      errorMsg: "0",
       temperatureData: [req.body],
     });
   } catch (err) {
     return res.status(502).json({
-      success: 0,
-      errorMsg: 1,
-      temperatureData: [],
+      success: "0",
+      errorMsg: "1",
+      temperatureData: null,
     });
   }
 }
@@ -32,15 +32,15 @@ export async function temperatureGetHandler(req: Request, res: Response) {
     log.info(result);
     if (result_length > 0) {
       return res.status(200).json({
-        success: 1,
-        errorMsg: 0,
+        success: "1",
+        errorMsg: "0",
         temperatureData: [...result],
       });
     } else {
       return res.status(404).json({
-        success: 0,
-        errorMsg: 1,
-        temperatureData: [],
+        success: "0",
+        errorMsg: "1",
+        temperatureData: null,
       });
     }
   } catch (err) {
@@ -55,15 +55,15 @@ export async function temperatureGetStatusHandler(req: Request, res: Response) {
     log.info(result);
     if (result_length > 0) {
       return res.status(200).json({
-        success: 1,
-        errorMsg: 0,
+        success: "1",
+        errorMsg: "0",
         temperatureData: [...result],
       });
     } else {
       return res.status(404).json({
-        success: 0,
-        errorMsg: 1,
-        temperatureData: [],
+        success: "0",
+        errorMsg: "1",
+        temperatureData: null,
       });
     }
   } catch (err) {
@@ -78,15 +78,15 @@ export async function temperatureMinGetHandler(req: Request, res: Response) {
     log.info(result);
     if (result_length > 0) {
       return res.status(200).json({
-        success: 1,
-        errorMsg: 0,
+        success: "1",
+        errorMsg: "0",
         temperatureData: [...result],
       });
     } else {
       return res.status(404).json({
-        success: 0,
-        errorMsg: 1,
-        temperatureData: [],
+        success: "0",
+        errorMsg: "1",
+        temperatureData: null,
       });
     }
   } catch (err) {
@@ -101,15 +101,15 @@ export async function temperatureMaxGetHandler(req: Request, res: Response) {
     log.info(result);
     if (result_length > 0) {
       return res.status(200).json({
-        success: 1,
-        errorMsg: 0,
+        success: "1",
+        errorMsg: "0",
         temperatureData: [...result],
       });
     } else {
       return res.status(404).json({
-        success: 0,
-        errorMsg: 1,
-        result: [],
+        success: "0",
+        errorMsg: "1",
+        temperatureData: null,
       });
     }
   } catch (err) {
