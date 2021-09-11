@@ -1,5 +1,6 @@
-import { getConnection, getRepository } from "typeorm";
+import { getConnection, getRepository, Between } from "typeorm";
 import { Temperature } from "../entity/temperature.entity";
+import log from "../logger";
 
 export async function insert(input) {
   const result = await getConnection()
@@ -118,6 +119,31 @@ export async function getMaxTemp(input) {
     where: {
       device_id: input.device_id,
       max_temp_status: input.max_temp_status,
+    },
+  });
+  return result;
+}
+
+export async function getDataFromDateToDate(input) {
+  const repository = await getRepository(Temperature);
+  const result = await repository.find({
+    select: [
+      "device_id",
+      "temp1",
+      "temp2",
+      "date",
+      "time",
+      "min_temp",
+      "max_temp",
+      "min_temp_status",
+      "max_temp_status",
+      "material_type",
+      "error_code",
+      "machine_status",
+    ],
+    where: {
+      device_id: input.device_id,
+      date: Between(input.fromDate, input.toDate),
     },
   });
   return result;
