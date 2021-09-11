@@ -60,4 +60,9 @@ export class Temperature {
     default: 0,
   })
   error_code: string;
+
+  @Column({
+    default: "off",
+  })
+  machine_status: string;
 }
