@@ -1,6 +1,5 @@
 import { getConnection, getRepository } from "typeorm";
 import { Temperature } from "../entity/temperature.entity";
-import log from "../logger";
 
 export async function insert(input) {
   const result = await getConnection()
@@ -19,6 +18,7 @@ export async function insert(input) {
       max_temp_status: input.max_temp_status,
       material_type: input.material_type,
       error_code: input.error_code,
+      machine_status: input.machine_status,
     })
     .execute();
   return result;
@@ -39,6 +39,7 @@ export async function get(input) {
       "max_temp_status",
       "material_type",
       "error_code",
+      "machine_status",
     ],
     where: { device_id: input.device_id },
   });
@@ -60,6 +61,7 @@ export async function getTempStatus(input) {
       "max_temp_status",
       "material_type",
       "error_code",
+      "machine_status",
     ],
     where: {
       device_id: input.device_id,
@@ -87,6 +89,7 @@ export async function getMinTemp(input) {
       "min_temp_status",
       "max_temp_status",
       "material_type",
+      "machine_status",
     ],
     where: {
       device_id: input.device_id,
@@ -110,6 +113,7 @@ export async function getMaxTemp(input) {
       "min_temp_status",
       "max_temp_status",
       "material_type",
+      "machine_status",
     ],
     where: {
       device_id: input.device_id,
