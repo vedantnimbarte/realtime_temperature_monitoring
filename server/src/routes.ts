@@ -6,6 +6,8 @@ import {
   temperatureMaxGetHandler,
   temperatureGetStatusHandler,
   GenerateReportFromDateToDate,
+  GenerateReportByDate,
+  GenerateReportByMonthAndYear,
 } from "./controller/temperature.controller";
 
 export default function (app: Express) {
@@ -23,5 +25,9 @@ export default function (app: Express) {
 
   app.post("/api/getMinTemp", temperatureMinGetHandler);
 
-  app.post("/api/report/fromDateToDate", GenerateReportFromDateToDate);
+  app.post("/api/report/byFromDateToDate", GenerateReportFromDateToDate);
+
+  app.post("/api/report/byDate", GenerateReportByDate);
+
+  app.post("/api/report/byMonthAndYear", GenerateReportByMonthAndYear);
 }

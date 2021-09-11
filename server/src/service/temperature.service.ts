@@ -1,4 +1,4 @@
-import { getConnection, getRepository, Between } from "typeorm";
+import { getConnection, getRepository, Between, Like } from "typeorm";
 import { Temperature } from "../entity/temperature.entity";
 import log from "../logger";
 
@@ -146,5 +146,58 @@ export async function getDataFromDateToDate(input) {
       date: Between(input.fromDate, input.toDate),
     },
   });
+  return result;
+}
+
+export async function getDataByDate(input) {
+  const repository = await getRepository(Temperature);
+  const result = await repository.find({
+    select: [
+      "device_id",
+      "temp1",
+      "temp2",
+      "date",
+      "time",
+      "min_temp",
+      "max_temp",
+      "min_temp_status",
+      "max_temp_status",
+      "material_type",
+      "error_code",
+      "machine_status",
+    ],
+    where: {
+      device_id: input.device_id,
+      date: input.date,
+    },
+  });
+
+  return result;
+}
+
+export async function getDataByMonthAndYear(input) {
+  let monthAndYear = input.month + " " + input.year;
+  const repository = await getRepository(Temperature);
+  const result = await repository.find({
+    select: [
+      "device_id",
+      "temp1",
+      "temp2",
+      "date",
+      "time",
+      "min_temp",
+      "max_temp",
+      "min_temp_status",
+      "max_temp_status",
+      "material_type",
+      "error_code",
+      "machine_status",
+    ],
+    where: {
+      device_id: input.device_id,
+      date: Like(`%${monthAndYear}`),
+    },
+  });
+
   return result;
 }
