@@ -7,13 +7,13 @@ export async function AddUserHandler(req: Request, res: Response) {
     return res.status(200).json({
       success: "1",
       errorMsg: "0",
-      temperatureData: [req.body],
+      usersData: [req.body],
     });
   } catch (err) {
     return res.status(502).json({
       success: "0",
       errorMsg: err,
-      temperatureData: null,
+      usersData: null,
     });
   }
 }
@@ -24,13 +24,13 @@ export async function updateUserHandler(req: Request, res: Response) {
     return res.status(200).json({
       success: "1",
       errorMsg: "0",
-      temperatureData: [req.body],
+      usersData: [req.body],
     });
   } catch (err) {
     return res.status(502).json({
       success: "0",
       errorMsg: err,
-      temperatureData: null,
+      usersData: null,
     });
   }
 }
@@ -43,20 +43,20 @@ export async function getUsersHandler(req: Request, res: Response) {
       return res.status(200).json({
         success: "1",
         errorMsg: "0",
-        temperatureData: [...result],
+        usersData: [...result],
       });
     } else {
       return res.status(200).json({
         success: "0",
         errorMsg: "No Data Available",
-        temperatureData: null,
+        usersData: null,
       });
     }
   } catch (err) {
     return res.status(502).json({
       success: "0",
       errorMsg: err,
-      temperatureData: null,
+      usersData: null,
     });
   }
 }
