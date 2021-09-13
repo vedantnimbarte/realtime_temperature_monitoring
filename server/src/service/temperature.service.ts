@@ -47,6 +47,27 @@ export async function get(input) {
   return result;
 }
 
+export async function getAllData(input) {
+  const repository = await getRepository(Temperature);
+  const result = await repository.find({
+    select: [
+      "device_id",
+      "temp1",
+      "temp2",
+      "date",
+      "time",
+      "min_temp",
+      "max_temp",
+      "min_temp_status",
+      "max_temp_status",
+      "material_type",
+      "error_code",
+      "machine_status",
+    ],
+  });
+  return result;
+}
+
 export async function getTempStatus(input) {
   const repository = await getRepository(Temperature);
   const result = await repository.find({

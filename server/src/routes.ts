@@ -24,6 +24,8 @@ export default function (app: Express) {
 
   app.post("/api/getTemp", temperatureGetHandler);
 
+  app.get("/api/getAllTempData", temperatureGetHandler);
+
   app.post("/api/getTempStatus", temperatureGetStatusHandler);
 
   app.post("/api/getMaxTemp", temperatureMaxGetHandler);
