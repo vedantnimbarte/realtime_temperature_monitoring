@@ -9,6 +9,11 @@ import {
   GenerateReportByDate,
   GenerateReportByMonthAndYear,
 } from "./controller/temperature.controller";
+import {
+  AddUserHandler,
+  getUsersHandler,
+  updateUserHandler,
+} from "./controller/users.controller";
 
 export default function (app: Express) {
   app.get("/api/healthcheck", (req: Request, res: Response) =>
@@ -30,4 +35,10 @@ export default function (app: Express) {
   app.post("/api/report/byDate", GenerateReportByDate);
 
   app.post("/api/report/byMonthAndYear", GenerateReportByMonthAndYear);
+
+  app.get("/api/user/getUsers", getUsersHandler);
+
+  app.post("/api/user/updateUser", updateUserHandler);
+
+  app.post("/api/user/addUser", AddUserHandler);
 }
