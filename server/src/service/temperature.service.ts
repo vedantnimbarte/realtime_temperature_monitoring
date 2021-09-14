@@ -48,23 +48,85 @@ export async function get(input) {
 }
 
 export async function getAllData(input) {
+  let result;
+  const { from_date, to_date, material_type, filter } = input;
   const repository = await getRepository(Temperature);
-  const result = await repository.find({
-    select: [
-      "device_id",
-      "temp1",
-      "temp2",
-      "date",
-      "time",
-      "min_temp",
-      "max_temp",
-      "min_temp_status",
-      "max_temp_status",
-      "material_type",
-      "error_code",
-      "machine_status",
-    ],
-  });
+  if (material_type == "both" && filter == "all") {
+    result = await repository.find({
+      where: {
+        date: Between(input.from_date, input.to_date),
+      },
+    });
+  } else if (material_type == "both") {
+    result = await repository.find({
+      select: [
+        "sr_no",
+        "device_id",
+        "temp1",
+        "temp2",
+        "date",
+        "time",
+        "min_temp",
+        "max_temp",
+        "min_temp_status",
+        "max_temp_status",
+        "material_type",
+        "error_code",
+        "machine_status",
+      ],
+      where: {
+        date: Between(input.from_date, input.to_date),
+        min_temp_status: input.filter == "min" ? "1" : "0",
+        max_temp_status: input.filter == "max" ? "1" : "0",
+      },
+    });
+  } else if (filter == "all") {
+    result = await repository.find({
+      select: [
+        "sr_no",
+        "device_id",
+        "temp1",
+        "temp2",
+        "date",
+        "time",
+        "min_temp",
+        "max_temp",
+        "min_temp_status",
+        "max_temp_status",
+        "material_type",
+        "error_code",
+        "machine_status",
+      ],
+      where: {
+        material_type: input.material_type,
+        date: Between(input.from_date, input.to_date),
+      },
+    });
+  } else {
+    result = await repository.find({
+      select: [
+        "sr_no",
+        "device_id",
+        "temp1",
+        "temp2",
+        "date",
+        "time",
+        "min_temp",
+        "max_temp",
+        "min_temp_status",
+        "max_temp_status",
+        "material_type",
+        "error_code",
+        "machine_status",
+      ],
+      where: {
+        material_type: input.material_type,
+        date: Between(input.from_date, input.to_date),
+        min_temp_status: input.filter == "min" ? "1" : "0",
+        max_temp_status: input.filter == "max" ? "1" : "0",
+      },
+    });
+  }
   return result;
 }
 

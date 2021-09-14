@@ -8,6 +8,7 @@ import {
   GenerateReportFromDateToDate,
   GenerateReportByDate,
   GenerateReportByMonthAndYear,
+  allTemperatureGetHandler,
 } from "./controller/temperature.controller";
 import {
   AddUserHandler,
@@ -24,7 +25,7 @@ export default function (app: Express) {
 
   app.post("/api/getTemp", temperatureGetHandler);
 
-  app.get("/api/getAllTempData", temperatureGetHandler);
+  app.get("/api/getAllTempData", allTemperatureGetHandler);
 
   app.post("/api/getTempStatus", temperatureGetStatusHandler);
 

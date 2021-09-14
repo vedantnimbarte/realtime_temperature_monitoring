@@ -57,7 +57,7 @@ export async function temperatureGetHandler(req: Request, res: Response) {
 
 export async function allTemperatureGetHandler(req: Request, res: Response) {
   try {
-    let result = await getAllData(req.body);
+    let result = await getAllData(req.query);
     let result_length = Object.keys(result).length;
     if (result_length > 0) {
       return res.status(200).json({
