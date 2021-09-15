@@ -227,6 +227,7 @@ export async function getDataFromDateToDate(input) {
     where: {
       device_id: input.device_id,
       date: Between(input.fromDate, input.toDate),
+      machine_status: "ON",
     },
   });
   return result;
@@ -252,6 +253,7 @@ export async function getDataByDate(input) {
     where: {
       device_id: input.device_id,
       date: input.date,
+      machine_status: "ON",
     },
   });
 
@@ -279,6 +281,7 @@ export async function getDataByMonthAndYear(input) {
     where: {
       device_id: input.device_id,
       date: Like(`%${monthAndYear}`),
+      machine_status: "ON",
     },
   });
 
