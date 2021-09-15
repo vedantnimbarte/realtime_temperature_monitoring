@@ -13,6 +13,7 @@ import {
 import {
   AddUserHandler,
   getUsersHandler,
+  loginHandler,
   updateUserHandler,
 } from "./controller/users.controller";
 
@@ -44,4 +45,6 @@ export default function (app: Express) {
   app.post("/api/user/updateUser", updateUserHandler);
 
   app.post("/api/user/addUser", AddUserHandler);
+
+  app.post("/api/user/login", loginHandler);
 }
