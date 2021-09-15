@@ -33,3 +33,14 @@ export async function getAllUsers(input) {
   const result = repository.find();
   return result;
 }
+
+export async function login(input) {
+  const repository = getRepository(Users);
+  const result = repository.find({
+    where: {
+      email: input.email,
+      password: input.password,
+    },
+  });
+  return result;
+}
