@@ -41,7 +41,7 @@ export default function MaxTemperatureHits() {
         <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
           <Grid item>
             <Typography color="textSecondary" gutterBottom variant="h6">
-              Max Temp. Hits
+              Max Temp
             </Typography>
             <Typography color="textPrimary" variant="h3">
               {maxTemperatureCount}
