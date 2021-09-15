@@ -200,7 +200,7 @@ const ReportListResults = (props, { ...rest }) => {
       </Box>
       <Card {...rest}>
         <PerfectScrollbar>
-          <Box sx={{ minWidth: 1050 }}>
+          <Box sx={{ minWidth: 1040 }}>
             <Table>
               <TableHead>
                 <TableRow>
