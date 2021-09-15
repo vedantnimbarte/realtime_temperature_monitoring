@@ -5,7 +5,7 @@ import Logo from "./Logo";
 const MainNavbar = (props) => (
   <AppBar elevation={0} {...props}>
     <Toolbar sx={{ height: 64 }}>
-      <RouterLink to="/">
+      <RouterLink to="/app/dashboard">
         <Logo />
       </RouterLink>
     </Toolbar>
