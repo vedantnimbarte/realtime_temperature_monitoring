@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
-import PeopleIcon from "@material-ui/icons/PeopleOutlined";
 
 export default function MinTemperatureHits(props) {
   const [minTemperatureCount, setMinTemperatureCount] = React.useState(0);
@@ -20,21 +19,11 @@ export default function MinTemperatureHits(props) {
   }, []);
 
   const getDataFromApi = async () => {
-    const response = await fetch("http://localhost:8000/api/getTemp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ device_id: "TMS_101" }),
-    });
+    const response = await fetch("http://localhost:8000/api/temperature/live");
     const result = await response.json();
-    let count = 0;
-    for (const index in result.temperatureData) {
-      if (result.temperatureData[index].min_temp_status === "1") {
-        count = count + 1;
-      }
+    if (result.temperatureData[0].machine_status === "ON") {
+      setMinTemperatureCount(result.temperatureData[0].temp1);
     }
-    setMinTemperatureCount(count);
   };
 
   return (
@@ -43,7 +32,7 @@ export default function MinTemperatureHits(props) {
         <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
           <Grid item>
             <Typography color="textSecondary" gutterBottom variant="h6">
-              Min Temp
+              Temperature 1
             </Typography>
             <Typography color="textPrimary" variant="h1" sx={{ fontSize: 70 }}>
               {minTemperatureCount}
@@ -66,21 +55,7 @@ export default function MinTemperatureHits(props) {
           sx={{
             pt: 3,
           }}
-        >
-          {/* <ArrowUpwardIcon sx={{ color: green[900] }} />
-        <Typography
-          variant="body2"
-          sx={{
-            color: green[900],
-            mr: 1
-          }}
-        >
-          16%
-        </Typography>
-        <Typography color="textSecondary" variant="caption">
-          Since last month
-        </Typography> */}
-        </Box>
+        ></Box>
       </CardContent>
     </Card>
   );
