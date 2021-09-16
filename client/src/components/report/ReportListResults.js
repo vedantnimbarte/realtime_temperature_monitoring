@@ -161,7 +161,7 @@ const ReportListResults = (props, { ...rest }) => {
                   onChange={(event) => setMaterialType(event.target.value)}
                 >
                   <MenuItem value={"Steel Chips"}>Steel Chips</MenuItem>
-                  <MenuItem value={"Mill Chips"}>Mill Scale</MenuItem>
+                  <MenuItem value={"Mill Scale"}>Mill Scale</MenuItem>
                   <MenuItem value={"both"}>Both</MenuItem>
                 </Select>
               </FormControl>
