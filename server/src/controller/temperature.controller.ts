@@ -10,6 +10,7 @@ import {
   getDataByDate,
   getDataByMonthAndYear,
   getAllData,
+  getLiveData,
 } from "../service/temperature.service";
 
 export async function temperatureInsertHandler(req: Request, res: Response) {
@@ -220,6 +221,32 @@ export async function GenerateReportByMonthAndYear(
 ) {
   try {
     let result = await getDataByMonthAndYear(req.body);
+    let result_length = Object.keys(result).length;
+    if (result_length > 0) {
+      return res.status(200).json({
+        success: "1",
+        errorMsg: "0",
+        temperatureData: [...result],
+      });
+    } else {
+      return res.status(200).json({
+        success: "0",
+        errorMsg: "No Data Available",
+        temperatureData: null,
+      });
+    }
+  } catch (err) {
+    return res.status(502).json({
+      success: "0",
+      errorMsg: err,
+      temperatureData: null,
+    });
+  }
+}
+
+export async function LiveDataHandler(req: Request, res: Response) {
+  try {
+    let result = await getLiveData();
     let result_length = Object.keys(result).length;
     if (result_length > 0) {
       return res.status(200).json({

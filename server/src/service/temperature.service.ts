@@ -287,3 +287,13 @@ export async function getDataByMonthAndYear(input) {
 
   return result;
 }
+
+export async function getLiveData() {
+  const repository = await getRepository(Temperature);
+  const result = await repository.find({
+    order: { sr_no: "DESC" },
+    take: 1,
+  });
+
+  return result;
+}
