@@ -33,6 +33,11 @@ const items = [
     title: "Dashboard",
   },
   {
+    href: "/app/live",
+    icon: LiveActivityIcon,
+    title: "Live Data",
+  },
+  {
     href: "/app/users",
     icon: UsersIcon,
     title: "Users",
@@ -42,11 +47,7 @@ const items = [
     icon: ShoppingBagIcon,
     title: "Reports",
   },
-  {
-    href: "/app/live",
-    icon: LiveActivityIcon,
-    title: "Live Data",
-  },
+
   {
     href: "/app/account",
     icon: UserIcon,
