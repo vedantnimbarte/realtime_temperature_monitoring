@@ -26,7 +26,16 @@ const TotalTempHits = (props) => {
       body: JSON.stringify({ device_id: "TMS_101" }),
     });
     const result = await response.json();
-    setTotalTemperatureCount(result.temperatureData.length);
+    let count = 0;
+    for (const index in result.temperatureData) {
+      if (
+        result.temperatureData[index].min_temp_status === "1" ||
+        result.temperatureData[index].max_temp_status === "1"
+      ) {
+        count = count + 1;
+      }
+    }
+    setTotalTemperatureCount(count);
   };
   return (
     <Card {...props}>
