@@ -11,6 +11,7 @@ import { red } from "@material-ui/core/colors";
 
 export default function MaxTemperatureHits() {
   const [maxTemperatureCount, setMaxTemperatureCount] = React.useState(0);
+  const [maxTemp, setMaxTemp] = React.useState(0);
 
   React.useEffect(() => {
     setInterval(() => {
@@ -19,21 +20,16 @@ export default function MaxTemperatureHits() {
   }, []);
 
   const getDataFromApi = async () => {
-    const response = await fetch("http://localhost:8000/api/getTemp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ device_id: "TMS_101" }),
-    });
+    setMaxTemperatureCount(0);
+    setMaxTemp(0);
+    const response = await fetch("http://localhost:8000/api/temperature/live");
     const result = await response.json();
-    let count = 0;
-    for (const index in result.temperatureData) {
-      if (result.temperatureData[index].max_temp_status === "1") {
-        count = count + 1;
+    if (result.temperatureData[0].machine_status === "ON") {
+      setMaxTemperatureCount(result.temperatureData[0].temp2);
+      if (result.temperatureData[0].max_temp_status === "1") {
+        setMaxTemp(1);
       }
     }
-    setMaxTemperatureCount(count);
   };
 
   return (
@@ -42,9 +38,12 @@ export default function MaxTemperatureHits() {
         <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
           <Grid item>
             <Typography color="textSecondary" gutterBottom variant="h6">
-              Max Temp
+              Termperature 2
             </Typography>
-            <Typography color="textPrimary" variant="h1" sx={{ fontSize: 70 }}>
+            <Typography
+              variant="h1"
+              sx={{ fontSize: 70, color: `${maxTemp ? "red" : null}` }}
+            >
               {maxTemperatureCount}
               <sup>&#176;</sup>C
             </Typography>
