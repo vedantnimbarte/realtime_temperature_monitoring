@@ -9,6 +9,7 @@ import {
   GenerateReportByDate,
   GenerateReportByMonthAndYear,
   allTemperatureGetHandler,
+  LiveDataHandler,
 } from "./controller/temperature.controller";
 import {
   AddUserHandler,
@@ -47,4 +48,6 @@ export default function (app: Express) {
   app.post("/api/user/addUser", AddUserHandler);
 
   app.post("/api/user/login", loginHandler);
+
+  app.get("/api/temperature/live", LiveDataHandler);
 }
