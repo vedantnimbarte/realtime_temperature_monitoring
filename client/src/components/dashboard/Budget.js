@@ -31,7 +31,12 @@ const Budget = (props) => {
     let count = 0;
     for (const index in result.temperatureData) {
       if (result.temperatureData[index].date === date) {
-        count = count + 1;
+        if (
+          result.temperatureData[index].min_temp_status === "1" ||
+          result.temperatureData[index].max_temp_status === "1"
+        ) {
+          count = count + 1;
+        }
       }
     }
     setTodayTemperatureCount(count);
