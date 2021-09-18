@@ -23,7 +23,8 @@ const Register = () => {
   const [jobTitle, setJobTitle] = useState();
   const [mobile, setMobile] = useState();
 
-  const [success, setSuccess] = useState(0);
+  const [error, setError] = useState(0);
+  const [errorMsg, setErrorMsg] = useState();
 
   const addUser = async () => {
     const userData = {
@@ -41,10 +42,13 @@ const Register = () => {
       body: JSON.stringify(userData),
     });
     const result = await response.json();
-    if (result.success == "1") {
+
+    if (result.success === "1") {
       navigate("/app/dashboard", { replace: true });
     } else {
-      navigate("/login", { replace: true });
+      setError(1);
+      setErrorMsg(result.errorMsg);
+      // navigate("/login", { replace: true });
     }
   };
 
@@ -64,7 +68,7 @@ const Register = () => {
       >
         <Container maxWidth="sm">
           {/* <form> */}
-          <Box sx={{ mb: 3 }}>
+          <Box sx={{ mb: 1 }}>
             <Typography color="textPrimary" variant="h2">
               Create new account
             </Typography>
@@ -72,24 +76,33 @@ const Register = () => {
               Use your email to create new account
             </Typography>
           </Box>
-          <TextField
-            fullWidth
-            label="First name"
-            margin="normal"
-            name="firstName"
-            onChange={(event) => setFirstName(event.target.value)}
-            value={firstName}
-            variant="outlined"
-          />
-          <TextField
-            fullWidth
-            label="Last name"
-            margin="normal"
-            name="lastName"
-            onChange={(event) => setLastName(event.target.value)}
-            value={lastName}
-            variant="outlined"
-          />
+          <Box>
+            {error ? (
+              <Typography sx={{ color: "red" }}>{errorMsg}</Typography>
+            ) : (
+              ""
+            )}
+          </Box>
+          <Box sx={{ display: "flex" }}>
+            <TextField
+              fullWidth
+              label="First name"
+              margin="normal"
+              name="firstName"
+              onChange={(event) => setFirstName(event.target.value)}
+              value={firstName}
+              variant="outlined"
+            />
+            <TextField
+              fullWidth
+              label="Last name"
+              margin="normal"
+              name="lastName"
+              onChange={(event) => setLastName(event.target.value)}
+              value={lastName}
+              variant="outlined"
+            />
+          </Box>
           <TextField
             fullWidth
             label="Email Address"
