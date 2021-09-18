@@ -20,14 +20,16 @@ export default function MaxTemperatureHits() {
   }, []);
 
   const getDataFromApi = async () => {
-    setMaxTemperatureCount(0);
+    // setMaxTemperatureCount(0);
     setMaxTemp(0);
     const response = await fetch("http://localhost:8000/api/temperature/live");
     const result = await response.json();
-    if (result.temperatureData[0].machine_status === "ON") {
-      setMaxTemperatureCount(result.temperatureData[0].temp2);
-      if (result.temperatureData[0].max_temp_status === "1") {
-        setMaxTemp(1);
+    if (result.success === "1") {
+      if (result.temperatureData[0].machine_status === "ON") {
+        setMaxTemperatureCount(result.temperatureData[0].temp2);
+        if (result.temperatureData[0].max_temp_status === "1") {
+          setMaxTemp(1);
+        }
       }
     }
   };

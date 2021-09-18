@@ -21,8 +21,10 @@ export default function MinTemperatureHits(props) {
   const getDataFromApi = async () => {
     const response = await fetch("http://localhost:8000/api/temperature/live");
     const result = await response.json();
-    if (result.temperatureData[0].machine_status === "ON") {
-      setMinTemperatureCount(result.temperatureData[0].temp1);
+    if (result.success === "1") {
+      if (result.temperatureData[0].machine_status === "ON") {
+        setMinTemperatureCount(result.temperatureData[0].temp1);
+      }
     }
   };
 
