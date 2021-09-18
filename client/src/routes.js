@@ -8,7 +8,6 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import ReportList from "./pages/ReportList";
 import Register from "./pages/Register";
-import Settings from "./pages/Settings";
 import AddUser from "./pages/AddUser";
 import Live from "./pages/Live";
 
@@ -21,7 +20,6 @@ const routes = [
       { path: "users", element: <UsersList /> },
       { path: "dashboard", element: <Dashboard /> },
       { path: "reports", element: <ReportList /> },
-      { path: "settings", element: <Settings /> },
       { path: "adduser", element: <AddUser /> },
       { path: "live", element: <Live /> },
       { path: "*", element: <Navigate to="/404" /> },
