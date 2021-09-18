@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
 import Container from "@material-ui/core/Container";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 function Copyright() {
   return (
@@ -50,6 +51,7 @@ export default function SignIn() {
   const [password, setPassword] = React.useState();
   const [error, setError] = React.useState();
   const [success, setSuccess] = React.useState();
+  const [cookies, setCookies] = useCookies(["temp_monitoring_auth"]);
 
   const getDataFromApi = async () => {
     setError();
@@ -63,6 +65,9 @@ export default function SignIn() {
     });
     const result = await response.json();
     if (result.success == "1") {
+      setCookies("user", JSON.stringify(result.usersData[0]), {
+        path: "/",
+      });
       navigate("/app/dashboard", { replace: true });
       setSuccess(1);
     } else {
