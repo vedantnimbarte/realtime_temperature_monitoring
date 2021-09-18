@@ -22,6 +22,8 @@ const AddUserForm = (props) => {
   const [mobile, setMobile] = useState();
 
   const [success, setSuccess] = useState(0);
+  const [error, setError] = useState(0);
+  const [errorMsg, setErrorMsg] = useState();
 
   const addUser = async () => {
     const userData = {
@@ -45,6 +47,12 @@ const AddUserForm = (props) => {
       setTimeout(() => {
         setSuccess(0);
       }, 2000);
+    } else {
+      setError(1);
+      setTimeout(() => {
+        setError(0);
+        setErrorMsg(result.errorMsg);
+      }, 2000);
     }
   };
 
@@ -62,6 +70,15 @@ const AddUserForm = (props) => {
                 {firstName} {lastName}{" "}
               </strong>
               added successfully
+            </Alert>
+            <Divider />
+          </Box>
+        ) : error ? (
+          <Box>
+            <Divider />
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              {errorMsg}
             </Alert>
             <Divider />
           </Box>
