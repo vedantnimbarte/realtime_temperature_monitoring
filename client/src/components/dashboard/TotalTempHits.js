@@ -27,12 +27,14 @@ const TotalTempHits = (props) => {
     });
     const result = await response.json();
     let count = 0;
-    for (const index in result.temperatureData) {
-      if (
-        result.temperatureData[index].min_temp_status === "1" ||
-        result.temperatureData[index].max_temp_status === "1"
-      ) {
-        count = count + 1;
+    if (result.success === "1") {
+      for (const index in result.temperatureData) {
+        if (
+          result.temperatureData[index].min_temp_status === "1" ||
+          result.temperatureData[index].max_temp_status === "1"
+        ) {
+          count = count + 1;
+        }
       }
     }
     setTotalTemperatureCount(count);
