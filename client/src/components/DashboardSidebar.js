@@ -58,11 +58,6 @@ const items = [
     icon: LockIcon,
     title: "Logout",
   },
-  {
-    href: "/404",
-    icon: AlertCircleIcon,
-    title: "About",
-  },
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
@@ -120,7 +115,18 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           ))}
         </List>
       </Box>
+      <Divider />
       <Box sx={{ flexGrow: 1 }} />
+      <Typography
+        sx={{
+          color: "gray",
+          alignSelf: "center",
+          fontSize: 12,
+          marginBottom: 2,
+        }}
+      >
+        Version 1.0
+      </Typography>
     </Box>
   );
 
