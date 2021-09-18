@@ -4,6 +4,7 @@ import { Box, Container, Grid } from "@material-ui/core";
 import MaxTemperatureHits from "../components/live/MaxTemperatureHits";
 import MinTemperatureHits from "../components/live/MinTemperatureHits.js";
 import MaterialType from "../components/live/MaterialType";
+import Analytics from "../components/live/Analytics";
 
 const Live = () => {
   return (
@@ -29,7 +30,7 @@ const Live = () => {
           </Grid>
           <Grid container spacing={3} marginTop={0.5}>
             <Grid item lg={7} sm={6} xl={3} xs={12}>
-              <MinTemperatureHits />
+              <Analytics />
             </Grid>
             <Grid item lg={5} sm={6} xl={3} xs={12}>
               <MaterialType />
