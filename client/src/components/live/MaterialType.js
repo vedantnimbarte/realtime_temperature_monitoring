@@ -13,27 +13,28 @@ export default function MaterialType() {
   const [materialType, setMaterialType] = React.useState();
   const [minTemp, setMinTemp] = React.useState(0);
   const [maxTemp, setMaxTemp] = React.useState(0);
-  const [machineStatus, setMachineStatus] = React.useState();
+  const [machineStatus, setMachineStatus] = React.useState("OFF");
 
   React.useEffect(() => {
-    // setInterval(() => {
-    getDataFromApi();
-    // }, 1000);
+    setInterval(() => {
+      getDataFromApi();
+    }, 1000);
   }, []);
 
   const getDataFromApi = async () => {
     setMaterialType(0);
     const response = await fetch("http://localhost:8000/api/temperature/live");
     const result = await response.json();
-    console.log(result.temperatureData[0].machine_status);
-    if (result.temperatureData.machine_status === "ON") {
-      setMaterialType(result.temperatureData[0].temp2);
-      setMinTemp(result.temperatureData[0].min_temp);
-      setMaxTemp(result.temperatureData[0].max_temp);
-      setMachineStatus(result.temperatureData[0].machine_status);
-    }
-    if (result.temperatureData[0].machine_status === "OFF") {
-      setMachineStatus(result.temperatureData[0].machine_status);
+    if (result.success === "1") {
+      if (result.temperatureData[0].machine_status === "ON") {
+        setMaterialType(result.temperatureData[0].temp2);
+        setMinTemp(result.temperatureData[0].min_temp);
+        setMaxTemp(result.temperatureData[0].max_temp);
+        setMachineStatus(result.temperatureData[0].machine_status);
+      }
+      if (result.temperatureData[0].machine_status === "OFF") {
+        setMachineStatus(result.temperatureData[0].machine_status);
+      }
     }
   };
 
