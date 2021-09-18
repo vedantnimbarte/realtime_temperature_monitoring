@@ -2,19 +2,43 @@ import { Request, Response } from "express";
 import log from "../logger";
 import {
   addUser,
+  emailVerify,
   getAllUsers,
   login,
+  mobileVerify,
   updateUser,
 } from "../service/users.service";
 
 export async function AddUserHandler(req: Request, res: Response) {
   try {
-    await addUser(req.body);
-    return res.status(200).json({
-      success: "1",
-      errorMsg: "0",
-      usersData: [req.body],
-    });
+    const emailExists = await emailVerify(req.body);
+    const mobileExists = await mobileVerify(req.body);
+    if (emailExists && mobileExists) {
+      return res.status(200).json({
+        success: "0",
+        errorMsg: "user with this email and password already exists",
+        usersData: null,
+      });
+    } else if (emailExists) {
+      return res.status(200).json({
+        success: "0",
+        errorMsg: "user with this email already exists",
+        usersData: null,
+      });
+    } else if (mobileExists) {
+      return res.status(200).json({
+        success: "0",
+        errorMsg: "user with this mobile number already exists",
+        usersData: null,
+      });
+    } else {
+      await addUser(req.body);
+      return res.status(200).json({
+        success: "1",
+        errorMsg: "0",
+        usersData: [req.body],
+      });
+    }
   } catch (err) {
     return res.status(502).json({
       success: "0",
@@ -76,20 +100,20 @@ export async function loginHandler(req: Request, res: Response) {
       return res.status(200).json({
         success: "1",
         errorMsg: "0",
-        temperatureData: [...result],
+        usersData: [...result],
       });
     } else {
       return res.status(200).json({
         success: "0",
         errorMsg: "No Data Available",
-        temperatureData: null,
+        usersData: null,
       });
     }
   } catch (err) {
     return res.status(502).json({
       success: "0",
       errorMsg: err,
-      temperatureData: null,
+      usersData: null,
     });
   }
 }
