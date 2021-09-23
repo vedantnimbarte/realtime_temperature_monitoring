@@ -44,7 +44,7 @@ const Register = () => {
     const result = await response.json();
 
     if (result.success === "1") {
-      navigate("/app/dashboard", { replace: true });
+      navigate("/login", { replace: true });
     } else {
       setError(1);
       setErrorMsg(result.errorMsg);
