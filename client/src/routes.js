@@ -10,6 +10,7 @@ import ReportList from "./pages/ReportList";
 import Register from "./pages/Register";
 import AddUser from "./pages/AddUser";
 import Live from "./pages/Live";
+import Logout from "./pages/Logout.js";
 
 const routes = [
   {
@@ -22,7 +23,7 @@ const routes = [
       { path: "reports", element: <ReportList /> },
       { path: "adduser", element: <AddUser /> },
       { path: "live", element: <Live /> },
-      { path: "*", element: <Navigate to="/404" /> },
+      { path: "*", element: <Login /> },
     ],
   },
   {
@@ -31,9 +32,10 @@ const routes = [
     children: [
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
+      { path: "logout", element: <Logout /> },
       { path: "404", element: <NotFound /> },
       { path: "/", element: <Navigate to="/login" /> },
-      { path: "*", element: <Navigate to="/404" /> },
+      { path: "*", element: <Login /> },
     ],
   },
 ];
