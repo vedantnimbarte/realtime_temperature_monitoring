@@ -1,9 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Box, Container, Grid, Divider } from "@material-ui/core";
 import ProductCard from "../components/report/ReportCard";
-import products from "../__mocks__/products";
-import CustomerListResults from "../components/report/ReportListResults";
-import customers from "../__mocks__/customers";
+import ReportListResults from "../components/report/ReportListResults";
 
 const ReportList = () => (
   <>
@@ -18,17 +16,17 @@ const ReportList = () => (
       }}
     >
       <Container maxWidth={false}>
-        <Box sx={{ pt: 3 }}>
+        {/* <Box sx={{ pt: 3 }}>
           <Grid container spacing={2}>
-            {products.map((product) => (
-              <Grid item key={product.id} lg={12} md={12} xs={12}>
-                <ProductCard product={product} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+            {products.map((product) => ( */}
+        <Grid lg={12} md={12} xs={12}>
+          <ProductCard />
+        </Grid>
+        {/* ))}
+          </Grid> */}
+        {/* </Box> */}
         <Box sx={{ pt: 3 }}>
-          <CustomerListResults customers={customers} />
+          <ReportListResults />
         </Box>
       </Container>
     </Box>
