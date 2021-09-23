@@ -1,5 +1,6 @@
 import { getRepository, getConnection } from "typeorm";
 import { Users } from "../entity/Users.entity";
+import log from "../logger";
 
 export async function emailVerify(input) {
   const repository = await getRepository(Users);
@@ -43,11 +44,17 @@ export async function addUser(input) {
 export async function updateUser(input) {
   const result = await getConnection()
     .createQueryBuilder()
-    .update(Users)
-    .set(input)
-    .where(`email = ${input.email}`)
+    .update(Users, { ...input })
+    .where(`sr_no = '${input.sr_no}'`)
     .execute();
-  return result;
+
+  const repository = getRepository(Users);
+  const user = await repository.findOne({
+    where: {
+      sr_no: input.sr_no,
+    },
+  });
+  return user;
 }
 
 export async function getAllUsers(input) {
