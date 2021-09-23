@@ -50,11 +50,11 @@ export async function AddUserHandler(req: Request, res: Response) {
 
 export async function updateUserHandler(req: Request, res: Response) {
   try {
-    await updateUser(req.body);
+    const result = await updateUser(req.body);
     return res.status(200).json({
       success: "1",
       errorMsg: "0",
-      usersData: [req.body],
+      usersData: [result],
     });
   } catch (err) {
     return res.status(502).json({
