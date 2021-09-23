@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/styles";
 import Container from "@material-ui/core/Container";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { Helmet } from "react-helmet";
 
 function Copyright() {
   return (
@@ -53,6 +54,12 @@ export default function SignIn() {
   const [success, setSuccess] = React.useState();
   const [cookies, setCookies] = useCookies(["temp_monitoring_auth"]);
 
+  React.useEffect(() => {
+    if (cookies.user) {
+      navigate("/app/dashboard", { replace: true });
+    }
+  }, []);
+
   const getDataFromApi = async () => {
     setError();
     setSuccess();
@@ -64,7 +71,7 @@ export default function SignIn() {
       body: JSON.stringify({ email: email, password: password }),
     });
     const result = await response.json();
-    if (result.success == "1") {
+    if (result.success === "1") {
       setCookies("user", JSON.stringify(result.usersData[0]), {
         path: "/",
       });
@@ -82,72 +89,87 @@ export default function SignIn() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <img
-          src="/static/logo-dark.jpeg"
-          style={{ height: 80, width: 80, margin: 5 }}
-        />
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        {success == 0 ? (
-          <Typography component="h1" variant="h5" sx={{ color: "red" }}>
-            {error}
-          </Typography>
-        ) : (
-          ""
-        )}
-        {/* <form className={classes.form} noValidate> */}
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          autoFocus
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          autoComplete="current-password"
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={() => getDataFromApi()}
-        >
-          Sign In
-        </Button>
-        <Grid container>
-          <Grid item>
-            <Link href="register" variant="body2">
-              {"Don't have an account? Sign Up"}
-            </Link>
-          </Grid>
-        </Grid>
-        {/* </form> */}
-      </div>
-      <Box mt={8}>
-        <Copyright />
+    <>
+      <Helmet>
+        <title>Login | Temperature Monitoring Portal</title>
+      </Helmet>
+      <Box
+        sx={{
+          backgroundColor: "background.default",
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          justifyContent: "center",
+        }}
+      >
+        <Container maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <img
+              src="/static/logo-dark.jpeg"
+              style={{ height: 80, width: 80, margin: 5 }}
+            />
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            {success == 0 ? (
+              <Typography component="h1" variant="h5" sx={{ color: "red" }}>
+                {error}
+              </Typography>
+            ) : (
+              ""
+            )}
+            {/* <form className={classes.form} noValidate> */}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={() => getDataFromApi()}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link href="register" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+            {/* </form> */}
+          </div>
+          <Box mt={8}>
+            <Copyright />
+          </Box>
+        </Container>
       </Box>
-    </Container>
+    </>
   );
 }
