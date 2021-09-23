@@ -21,18 +21,18 @@ const Live = () => {
       >
         <Container maxWidth={false}>
           <Grid container spacing={3}>
-            <Grid item lg={6} sm={6} xl={3} xs={12}>
+            <Grid item x lg={6} sm={6} xl={6} xs={12}>
               <MinTemperatureHits />
             </Grid>
-            <Grid item lg={6} sm={6} xl={3} xs={12}>
+            <Grid item lg={6} sm={6} xl={6} xs={12}>
               <MaxTemperatureHits />
             </Grid>
           </Grid>
           <Grid container spacing={3} marginTop={0.5}>
-            <Grid item lg={7} sm={6} xl={3} xs={12}>
+            <Grid item lg={7} sm={6} xl={8} xs={12}>
               <Analytics />
             </Grid>
-            <Grid item lg={5} sm={6} xl={3} xs={12}>
+            <Grid item lg={5} sm={6} xl={4} xs={12}>
               <MaterialType />
             </Grid>
           </Grid>
