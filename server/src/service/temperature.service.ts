@@ -1,6 +1,16 @@
 import { getConnection, getRepository, Between, Like } from "typeorm";
 import { Temperature } from "../entity/temperature.entity";
-import log from "../logger";
+import * as moment from "moment";
+
+function serializeDate(input_date: string) {
+  let date;
+  date = moment(input_date, "DD MMM YYYY").format("L");
+  date = date.split("/");
+  const day = date[1]
+  const month = date[0]
+  const year = date[2]
+  return `${day}/${month}/${year}`
+}
 
 export async function insert(input) {
   const result = await getConnection()
@@ -11,7 +21,7 @@ export async function insert(input) {
       device_id: input.device_id,
       temp1: input.temp1,
       temp2: input.temp2,
-      date: input.date,
+      date: serializeDate(input.date),
       time: input.time,
       min_temp: input.min_temp,
       max_temp: input.max_temp,
@@ -54,7 +64,7 @@ export async function getAllData(input) {
   if (material_type == "both" && filter == "all") {
     result = await repository.find({
       where: {
-        date: Between(input.from_date, input.to_date),
+        date: Between(serializeDate(input.from_date), serializeDate(input.to_date)),
       },
     });
   } else if (material_type == "both") {
@@ -75,7 +85,7 @@ export async function getAllData(input) {
         "machine_status",
       ],
       where: {
-        date: Between(input.from_date, input.to_date),
+        date: Between(serializeDate(input.from_date), serializeDate(input.to_date)),
         min_temp_status: input.filter == "min" ? "1" : "0",
         max_temp_status: input.filter == "max" ? "1" : "0",
       },
@@ -99,7 +109,7 @@ export async function getAllData(input) {
       ],
       where: {
         material_type: input.material_type,
-        date: Between(input.from_date, input.to_date),
+        date: Between(serializeDate(input.from_date), serializeDate(input.to_date)),
       },
     });
   } else {
@@ -121,7 +131,7 @@ export async function getAllData(input) {
       ],
       where: {
         material_type: input.material_type,
-        date: Between(input.from_date, input.to_date),
+        date: Between(serializeDate(input.from_date), serializeDate(input.to_date)),
         min_temp_status: input.filter == "min" ? "1" : "0",
         max_temp_status: input.filter == "max" ? "1" : "0",
       },
@@ -226,7 +236,7 @@ export async function getDataFromDateToDate(input) {
     ],
     where: {
       device_id: input.device_id,
-      date: Between(input.fromDate, input.toDate),
+      date: Between(serializeDate(input.from_date), serializeDate(input.to_date)),
       machine_status: "ON",
     },
   });
@@ -252,7 +262,7 @@ export async function getDataByDate(input) {
     ],
     where: {
       device_id: input.device_id,
-      date: input.date,
+      date: serializeDate(input.date),
       machine_status: "ON",
     },
   });
@@ -261,7 +271,9 @@ export async function getDataByDate(input) {
 }
 
 export async function getDataByMonthAndYear(input) {
-  let monthAndYear = input.month + " " + input.year;
+ 
+  let monthNumber = moment().month(input.month).format("M");
+  let monthAndYear = monthNumber + "/" + input.year;
   const repository = await getRepository(Temperature);
   const result = await repository.find({
     select: [
