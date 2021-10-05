@@ -21,19 +21,32 @@ export default function MaterialType() {
     }, 1000);
   }, []);
 
+  function getTime(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+}
+
   const getDataFromApi = async () => {
-    setMaterialType(0);
     const response = await fetch("http://localhost:8000/api/temperature/live");
     const result = await response.json();
     if (result.success === "1") {
-      if (result.temperatureData[0].machine_status === "ON") {
-        setMaterialType(result.temperatureData[0].temp2);
+      if (result.temperatureData[0].machine_status === "ON" && result.temperatureData[0].time === getTime(new Date())) {
+        setMaterialType(result.temperatureData[0].material_type);
         setMinTemp(result.temperatureData[0].min_temp);
         setMaxTemp(result.temperatureData[0].max_temp);
         setMachineStatus(result.temperatureData[0].machine_status);
       }
       if (result.temperatureData[0].machine_status === "OFF") {
         setMachineStatus(result.temperatureData[0].machine_status);
+        setMaterialType(0);
+        setMinTemp(0);
+        setMaxTemp(0);
       }
     }
   };
