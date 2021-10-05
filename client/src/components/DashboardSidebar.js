@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   Avatar,
@@ -20,11 +20,9 @@ import {
   Activity as LiveActivityIcon,
 } from "react-feather";
 import NavItem from "./NavItem";
+import { useCookies } from "react-cookie";
 
-const user = {
-  jobTitle: "Plant Manager",
-  name: "Shyam Prasad",
-};
+const user = {};
 
 const items = [
   {
@@ -54,7 +52,7 @@ const items = [
     title: "Account",
   },
   {
-    href: "/login",
+    href: "/logout",
     icon: LockIcon,
     title: "Logout",
   },
@@ -62,6 +60,8 @@ const items = [
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [cookies, setCookies] = useCookies(["temp_monitoring_auth"]);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -96,10 +96,10 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           to="/app/account"
         />
         <Typography color="textPrimary" variant="h5">
-          {user.name}
+          {cookies.user && cookies.user.name}
         </Typography>
         <Typography color="textSecondary" variant="body2">
-          {user.jobTitle}
+          {cookies.user && cookies.user.job_title}
         </Typography>
       </Box>
       <Divider />
