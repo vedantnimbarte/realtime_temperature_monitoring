@@ -10,36 +10,44 @@ import {
 import { Line } from "react-chartjs-2";
 
 export default function Analytics() {
-  let tempData = [];
-  let tempLabel = [];
-  const line = {
-    labels: tempLabel,
-    datasets: [
+  const data = {
+  labels: ['1', '2', '3', '4', '5', '6'],
+  datasets: [
+    {
+      label: 'Min Temp',
+      data: [12, 19, 3, 5, 2, 3],
+      fill: false,
+      backgroundColor: 'green',
+      borderColor: 'green',
+    },
+    {
+      label: 'Max Temp',
+      data: [20, 29, 23, 35, 32, 30],
+      fill: false,
+      backgroundColor: 'red',
+      borderColor: 'red',
+    },
+  ],
+
+};
+
+const options = {
+  scales: {
+    yAxes: [
       {
-        label: "My First dataset",
-        fill: false,
-        data: tempData,
+        ticks: {
+          beginAtZero: true,
+        },
       },
     ],
-  };
-
-  const options = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
-  };
+  },
+};
 
   return (
     <Box>
       <Card>
         <CardContent>
-          <Line data={line} options={options} />
+          <Line data={data} options={options} />
         </CardContent>
       </Card>
     </Box>
