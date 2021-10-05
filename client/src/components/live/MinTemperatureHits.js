@@ -18,11 +18,22 @@ export default function MinTemperatureHits(props) {
     }, 1000);
   }, []);
 
+  function getTime(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+}
+
   const getDataFromApi = async () => {
     const response = await fetch("http://localhost:8000/api/temperature/live");
     const result = await response.json();
     if (result.success === "1") {
-      if (result.temperatureData[0].machine_status === "ON") {
+      if (result.temperatureData[0].machine_status === "ON" && result.temperatureData[0].time === getTime(new Date())) {
         setMinTemperatureCount(result.temperatureData[0].temp1);
       }
     }
