@@ -19,7 +19,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import { headers, reportDataObject } from "./CSVHeaders";
+import { headers } from "./CSVHeaders";
 import GetApp from "@material-ui/icons/GetApp";
 import { CSVLink } from "react-csv";
 import { ExportToExcel } from "./ExportExcel";
@@ -34,6 +34,18 @@ const ReportListResults = (props, { ...rest }) => {
   const [reportData, setReportData] = useState([]);
 
   const [temperatureData, setTemperatureData] = useState([]);
+
+  let reportDataObject = {
+    device_id: "",
+    material_type: "",
+    min_temp: "",
+    max_temp: "",
+    temp1: "",
+    temp2: "",
+    temp_status: "",
+    date: "",
+    time: "",
+  };
 
   const csvReport = {
     data: reportData,
@@ -51,9 +63,10 @@ const ReportListResults = (props, { ...rest }) => {
       `http://localhost:8000/api/getAllTempData?material_type=${materialType}&from_date=${from_date}&to_date=${to_date}&filter=${filter}`
     );
     const result = await response.json();
-    if (result.success == "1") {
+    if (result.success === "1") {
       setTemperatureData(result.temperatureData);
       for (const id in result.temperatureData) {
+        console.log(result.temperatureData[id]);
         reportDataObject.device_id = result.temperatureData[id].device_id;
         reportDataObject.material_type =
           result.temperatureData[id].material_type;
@@ -70,9 +83,20 @@ const ReportListResults = (props, { ...rest }) => {
         reportDataObject.date = result.temperatureData[id].date;
         reportDataObject.time = result.temperatureData[id].time;
         reportDataArray.push(reportDataObject);
+        // console.log(reportDataObject);
+        reportDataObject = {
+          device_id: "",
+          material_type: "",
+          min_temp: "",
+          max_temp: "",
+          temp1: "",
+          temp2: "",
+          temp_status: "",
+          date: "",
+          time: "",
+        };
       }
       setReportData(reportDataArray);
-      console.log(reportData.length);
     }
   };
 
